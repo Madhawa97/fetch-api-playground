@@ -30,11 +30,21 @@ const get_posts = async () => {
         const btn_del = document.createElement("button");
         btn_del.innerHTML = "DEL";
 
-        btn_del.onclick = (e) => {
+        btn_del.onclick = async(e) => {
+
+            const response = await fetch(`http://localhost:3000/posts/${id}`, {
+                method : 'DELETE',
+                headers : {
+                    'Content-Type': 'application/json'
+                }
+                //body:
+            });
+            // location.reload();
+
             // const id = document.parentNode.parentNode.id;
-            console.log("====================================");
-            console.log(id);
-            console.log("====================================");
+            // console.log("====================================");
+            // console.log(id);
+            // console.log("====================================");
         };
         td_del.appendChild(btn_del);
 
@@ -45,10 +55,11 @@ const get_posts = async () => {
         btn_upd.innerHTML = "UPD";
 
         btn_upd.onclick = (e) => {
+            location.replace('/update.html');
             // const id = document.parentNode.parentNode.id;
-            console.log("====================================");
-            console.log(id);
-            console.log("====================================");
+            // console.log("====================================");
+            // console.log(id);
+            // console.log("====================================");
         };
         td_upd.appendChild(btn_upd);
 
