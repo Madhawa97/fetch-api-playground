@@ -37,14 +37,11 @@ const get_posts = async () => {
                 headers : {
                     'Content-Type': 'application/json'
                 }
-                //body:
+                //body:  // no need for 'DELETE' method
             });
-            // location.reload();
-
-            // const id = document.parentNode.parentNode.id;
-            // console.log("====================================");
-            // console.log(id);
-            // console.log("====================================");
+            if (response.status == 200) {
+                location.reload();
+            }
         };
         td_del.appendChild(btn_del);
 
@@ -55,11 +52,10 @@ const get_posts = async () => {
         btn_upd.innerHTML = "UPD";
 
         btn_upd.onclick = (e) => {
-            location.replace('/update.html');
-            // const id = document.parentNode.parentNode.id;
-            // console.log("====================================");
-            // console.log(id);
-            // console.log("====================================");
+            localStorage.setItem("id", id);
+            // sets clicked items id in browser local storage
+
+            location.href = "/update.html";
         };
         td_upd.appendChild(btn_upd);
 

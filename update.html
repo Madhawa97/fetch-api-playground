@@ -1,12 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update</title>
-</head>
-<body>
-    
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Update</title>
+    </head>
+    <body onload="init()">
+        <h1>Update Entry</h1>
+        <label for="">Title</label>
+        <input type="text" name="title" size="100" id="input-title" /><button
+            id="btn-title"
+        >
+            EDIT
+        </button>
+        <br />
+
+        <label for="">Body</label>
+        <input type="text" name="body" size="100" id="input-body" /><button
+            id="btn-body"
+        >
+            EDIT
+        </button>
+        <br /><br />
+
+        <button onclick="location.replace('/')">Back</button>
+
+        <script>
+            const init = async () => {
+                const _id = localStorage.getItem("id");
+
+                const url = `http://localhost:3000/posts/${_id}`;
+
+                const res = await fetch(url);
+                const data = await res.json();
+
+                const { id, title, body } = data;
+
+                document.getElementById("input-title").placeholder = title;
+                document.getElementById("input-body").placeholder = body;
+
+                // function for edit buttons
+                // title button
+                document.getElementById("btn-title").onclick = async (e) => {
+                    const title = document.getElementById("input-title").value;
+                    const _res = await fetch(url, {
+                        method: "PATCH",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ title }),
+                    });
+
+                    if (_res.status == 200) {
+                        location.reload();
+                    }
+                };
+
+                // edit button
+                document.getElementById("btn-body").onclick = async (e) => {
+                    const body = document.getElementById("input-body").value;
+                    const _res = await fetch(url, {
+                        method: "PATCH",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ body }),
+                    });
+                    if (_res.status == 200) {
+                        location.reload();
+                    }
+                };
+            };
+        </script>
+    </body>
 </html>
